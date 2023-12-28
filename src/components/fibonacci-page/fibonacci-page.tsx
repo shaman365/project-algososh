@@ -4,7 +4,7 @@ import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import styles from "./fibonacci.module.css"
-import { useForm } from "../hooks/useForm"
+import { useForm } from "../../hooks/useForm"
 import { TFormData } from "../../types/form"
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { FIBONACCI_MAX_NUMBER } from "../../constants/restrictions"
@@ -48,7 +48,7 @@ export const FibonacciPage: React.FC = () => {
           />
           <Button
             extraClass={styles.button}
-            text="Развернуть"
+            text="Рассчитать"
             type='submit'
             isLoader={loader}
             disabled={Number(values.sourceString) < 1 || Number(values.sourceString) > FIBONACCI_MAX_NUMBER}

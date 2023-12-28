@@ -8,7 +8,7 @@ import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { LIST_INIT_VALUES, LIST_MAX_LENGTH_ARR, LIST_STRING_MAX_LENGTH } from "../../constants/restrictions"
 import { ElementStates } from "../../types/element-states";
 import { TFormData } from "../../types/form"
-import { useForm } from "../../components/hooks/useForm"
+import { useForm } from "../../hooks/useForm"
 import { LinkedList } from "./utils";
 import { NodeHead, NodeTail } from "./node-small";
 
@@ -23,7 +23,7 @@ export const ListPage: React.FC = () => {
   const [node, setNode] = useState<{ value: string, index: null | number, head: boolean }>({ value: '', index: null, head: true })
   const [circleText, setCircleText] = useState<boolean>(false)
   const [currentIndex, setCurrentIndex] = useState<number>(0)
-  const [loader, setIsLoader] = useState({
+  const [loader, setLoader] = useState({
     buttonAddHead: false,
     buttonAddTail: false,
     buttonRemoveHead: false,
@@ -40,7 +40,7 @@ export const ListPage: React.FC = () => {
   }, []);
 
   const addHead = async () => {
-    setIsLoader({ ...loader, buttonAddHead: true })
+    setLoader({ ...loader, buttonAddHead: true })
     list.prepend(values.sourceString)
     setNode({ value: values.sourceString, index: 0, head: true })
     await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
@@ -49,11 +49,11 @@ export const ListPage: React.FC = () => {
     values.sourceString = '';
     values.sourceIndex = '';
     await switchState()
-    setIsLoader({ ...loader, buttonAddHead: false })
+    setLoader({ ...loader, buttonAddHead: false })
   }
 
   const addTail = async () => {
-    setIsLoader({ ...loader, buttonAddTail: true })
+    setLoader({ ...loader, buttonAddTail: true })
     list.append(values.sourceString)
     setNode({ value: values.sourceString, index: arr.length - 1, head: true })
     await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
@@ -62,36 +62,36 @@ export const ListPage: React.FC = () => {
     values.sourceString = '';
     values.sourceIndex = '';
     await switchState()
-    setIsLoader({ ...loader, buttonAddTail: false })
+    setLoader({ ...loader, buttonAddTail: false })
   }
 
   const removeHead = async () => {
-    setIsLoader({ ...loader, buttonRemoveHead: true })
+    setLoader({ ...loader, buttonRemoveHead: true })
     setCircleText(true)
     list.removeHead()
     setNode({ value: '', index: 0, head: false })
     await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
     setArr([...list.getItems()])
     setNode({ value: '', index: null, head: false })
-    setIsLoader({ ...loader, buttonRemoveHead: false })
+    setLoader({ ...loader, buttonRemoveHead: false })
     setCircleText(false)
   }
 
   const removeTail = async () => {
-    setIsLoader({ ...loader, buttonRemoveTail: true })
+    setLoader({ ...loader, buttonRemoveTail: true })
     setCircleText(true)
     list.removeTail()
     setNode({ value: '', index: arr.length - 1, head: false })
     await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
     setArr([...list.getItems()])
     setNode({ value: '', index: null, head: false })
-    setIsLoader({ ...loader, buttonRemoveTail: false })
+    setLoader({ ...loader, buttonRemoveTail: false })
     setCircleText(false)
   }
 
   const insertAt = async () => {
     const index = +values.sourceIndex
-    setIsLoader({ ...loader, buttonInsertAt: true })
+    setLoader({ ...loader, buttonInsertAt: true })
     list.insertAt(values.sourceString, index)
     for (let i = 0; i <= index; i++) {
       await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
@@ -109,12 +109,12 @@ export const ListPage: React.FC = () => {
     values.sourceString = '';
     values.sourceIndex = '';
     setState(ElementStates.Default)
-    setIsLoader({ ...loader, buttonInsertAt: false })
+    setLoader({ ...loader, buttonInsertAt: false })
   }
 
   const removeAt = async () => {
     const index = +values.sourceIndex
-    setIsLoader({ ...loader, bottonRemoveAt: true })
+    setLoader({ ...loader, bottonRemoveAt: true })
     list.removeAt(index)
     for (let i = 0; i <= index; i++) {
       await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
@@ -133,7 +133,7 @@ export const ListPage: React.FC = () => {
     values.sourceString = '';
     values.sourceIndex = '';
     setCircleText(false)
-    setIsLoader({ ...loader, bottonRemoveAt: false })
+    setLoader({ ...loader, bottonRemoveAt: false })
   }
 
   const loaderButtons =
@@ -175,28 +175,28 @@ export const ListPage: React.FC = () => {
               text="Добавить в head"
               isLoader={loader.buttonAddHead}
               disabled={stateAddButtons}
-              onClick={() => addHead()}
+              onClick={addHead}
             />
             <Button
               extraClass={styles.buttonWidth_175}
               text="Добавить в tail"
               isLoader={loader.buttonAddTail}
               disabled={stateAddButtons}
-              onClick={() => addTail()}
+              onClick={addTail}
             />
             <Button
               extraClass={styles.buttonWidth_175}
               text="Удалить из head"
               isLoader={loader.buttonRemoveHead}
               disabled={stateDeleteButtons}
-              onClick={() => removeHead()}
+              onClick={removeHead}
             />
             <Button
               extraClass={styles.buttonWidth_175}
               text="Удалить из tail"
               isLoader={loader.buttonRemoveTail}
               disabled={stateDeleteButtons}
-              onClick={() => removeTail()}
+              onClick={removeTail}
             />
           </div>
           <div className={styles.controlContainer}>
@@ -216,14 +216,14 @@ export const ListPage: React.FC = () => {
               text="Добавить по индексу"
               isLoader={loader.buttonInsertAt}
               disabled={stateButtonInsertAt}
-              onClick={() => insertAt()}
+              onClick={insertAt}
             />
             <Button
               extraClass={styles.buttonWidth_362}
               text="Удалить по индексу"
               isLoader={loader.bottonRemoveAt}
               disabled={stateButtonRemoveAt}
-              onClick={() => removeAt()}
+              onClick={removeAt}
             />
           </div>
 

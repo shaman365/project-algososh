@@ -1,4 +1,3 @@
-import { log } from "console";
 import { useState } from "react";
 
 export function useForm<T>(inputValues: T) {

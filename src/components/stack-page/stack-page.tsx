@@ -8,7 +8,7 @@ import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 import { STACK_STRING_MAX_LENGTH, STACK_MAX_LENGTH } from "../../constants/restrictions"
 import { ElementStates } from "../../types/element-states";
 import { TFormData } from "../../types/form"
-import { useForm } from "../../components/hooks/useForm"
+import { useForm } from "../../hooks/useForm"
 import { Stack } from "./utils";
 
 const stack = new Stack<string>();
@@ -16,49 +16,63 @@ const stack = new Stack<string>();
 export const StackPage: React.FC = () => {
 
   const { values, handleChange } = useForm<TFormData>({ sourceString: '' });
-  const [loader, setLoader] = useState<boolean>(false);
   const [arr, setArr] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
-  
+  const [loader, setLoader] = useState({
+    buttonAdd: false,
+    buttonRemove: false,
+    buttonClear: false,
+  })
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+  };
+
   const add = async () => {
     if (values.sourceString && stack.size <= STACK_MAX_LENGTH) {
-      setLoader(true)
+      setLoader({ ...loader, buttonAdd: true });
       stack.push(values.sourceString);
       values.sourceString = '';
       setCurrentIndex(stack.size);
       setArr([...stack.getItems]);
       await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
       setCurrentIndex(-1);
-      setLoader(false)
+      setLoader({ ...loader, buttonAdd: false })
     }
   }
 
   const remove = async () => {
     if (stack.size > 0) {
-      setLoader(true)
+      setLoader({ ...loader, buttonRemove: true })
       stack.pop();
       setCurrentIndex(stack.size);
       await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
       setArr([...stack.getItems]);
       setCurrentIndex(stack.size);
-      setLoader(false)
+      setLoader({ ...loader, buttonRemove: false })
     }
   }
 
-  const clear = () => {
+  const clear = async () => {
     if (stack.size > 0) {
-      setLoader(true)
+      setLoader({ ...loader, buttonClear: true })
       stack.clear();
+      await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
       setArr([...stack.getItems]);
       setCurrentIndex(-1);
-      setLoader(false)
+      setLoader({ ...loader, buttonClear: false })
     }
   }
+
+  const disableInput =
+    loader.buttonAdd ||
+    loader.buttonRemove ||
+    loader.buttonClear ? true : false;
 
   return (
     <SolutionLayout title="Стек">
       <section className={styles.main}>
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <Input
             extraClass={styles.inputWidth}
             isLimitText={true}
@@ -66,27 +80,27 @@ export const StackPage: React.FC = () => {
             value={values.sourceString}
             onChange={handleChange}
             name={"sourceString"}
-            disabled={loader}
+            disabled={disableInput}
           />
           <Button
             extraClass={`${styles.button} ${styles.ml_50}`}
             text="Добавить"
-            isLoader={loader}
+            isLoader={loader.buttonAdd}
             disabled={values.sourceString.length < 1}
-            onClick={() => add()}
+            onClick={add}
           />
           <Button
             extraClass={styles.button}
             text="Удалить"
-            isLoader={loader}
+            isLoader={loader.buttonRemove}
             disabled={arr.length < 1}
-            onClick={() => remove()}
+            onClick={remove}
           />
           <Button
             extraClass={`${styles.button} ${styles.ml_80}`}
             text="Очистить"
-            isLoader={loader}
-            onClick={() => clear()}
+            isLoader={loader.buttonClear}
+            onClick={clear}
             disabled={values.sourceString.length < 1 && arr.length < 1}
           />
         </form>
@@ -95,7 +109,7 @@ export const StackPage: React.FC = () => {
             <li key={index}>
               <Circle
                 index={index}
-                state={currentIndex - 1 === index ? ElementStates.Changing : ElementStates.Default }
+                state={currentIndex - 1 === index ? ElementStates.Changing : ElementStates.Default}
                 head={index === stack.size - 1 ? 'top' : ''}
                 letter={item}
               />

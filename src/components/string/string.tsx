@@ -4,7 +4,7 @@ import { Input } from "../ui/input/input";
 import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import styles from "./string.module.css"
-import { useForm } from "../hooks/useForm"
+import { useForm } from "../../hooks/useForm"
 import { ElementStates } from "../../types/element-states";
 import { DELAY_IN_MS } from "../../constants/delays";
 import { TElement } from "./utils";
