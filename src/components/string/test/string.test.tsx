@@ -1,20 +1,20 @@
-import { reverse } from './utils';
+import { reverseTst } from '../utils';
 import { expect } from '@jest/globals';
 
 describe('Тест алгоритма разворота строки:', () => {
-  it('Строка с чётным количеством символов', () => {
-    expect(reverse('тест')).toEqual(['т','с','е','т']);
+  test('Строка с чётным количеством символов', () => {
+    expect(reverseTst('тест')).toEqual(['т','с','е','т']);
   });
 
-  it('Строка с нечётным количеством символов', () => {
-    expect(reverse('кипарис')).toEqual(['с','и','р','а','п','и','к']);
+  test('Строка с нечётным количеством символов', () => {
+    expect(reverseTst('кипарис')).toEqual(['с','и','р','а','п','и','к']);
   });
 
-  it('Строка с одним символом', () => {
-    expect(reverse('a')).toEqual(['a']);
+  test('Строка с одним символом', () => {
+    expect(reverseTst('a')).toEqual(['a']);
   });
 
-  it('Пустая строка', () => {
-    expect(reverse('')).toEqual([]);
+  test('Пустая строка', () => {
+    expect(reverseTst('')).toEqual([]);
   });
 });

@@ -13,26 +13,12 @@ export const getSourceString = (sourceString: string): TElement[] => {
   return sourceString.split('').map((value => ({ value, state: ElementStates.Default })));
 }
 
-// const reverse = async (arr: TElement[]) => {
-
-//   const revList = [][];
-
-//   const middle = Math.round(arr.length / 2);
-
-//   for (let i = 0; i < middle; i++) {
-//     let j = arr.length - 1 - i;
-
-//     if (i !== j) {
-//       arr[i].state = ElementStates.Changing;
-//       arr[j].state = ElementStates.Changing;
-//       revList.push(arr);
-//     };
-
-//     swapElements(arr, i, j); 
-
-//     arr[i].state = ElementStates.Modified;
-//     arr[j].state = ElementStates.Modified;
-
-//     setStrArray([...arr]);
-//   }
-// };
+export const reverseTst = (sourceString: string) => {
+  const arr = sourceString.split('');
+  const middle = Math.round(arr.length / 2);
+  for (let i = 0; i < middle; i++) {
+    let j = arr.length - 1 - i;
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr
+}

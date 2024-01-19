@@ -9,7 +9,7 @@ import { ElementStates } from "../../types/element-states";
 import { DELAY_IN_MS } from "../../constants/delays";
 import { TElement } from "./utils";
 import { TFormData } from "../../types/form"
-import { getSourceString, swapElements } from "./utils";
+import { getSourceString, swapElements, reverseTst } from "./utils";
 import { STRING_MAX_LENGTH } from "../../constants/restrictions"
 
 export const StringComponent: React.FC = () => {
@@ -17,7 +17,7 @@ export const StringComponent: React.FC = () => {
   const { values, handleChange } = useForm<TFormData>({ sourceString: '' });
   const [loader, setLoader] = useState<boolean>(false);
   const [strArray, setStrArray] = useState<TElement[]>([]);
-   
+ 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();        
     reverse(getSourceString(values.sourceString));
