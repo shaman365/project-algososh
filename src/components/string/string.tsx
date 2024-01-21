@@ -47,7 +47,8 @@ export const StringComponent: React.FC = () => {
 
     setLoader(false);
   };
-  
+
+  const disableInput = loader 
 
   return (
     <SolutionLayout title="Строка">
@@ -59,6 +60,7 @@ export const StringComponent: React.FC = () => {
             value={values.sourceString}
             onChange={handleChange}
             name={"sourceString"}
+            disabled = { disableInput }
           />
           <Button
             extraClass={styles.button}
