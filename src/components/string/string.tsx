@@ -48,7 +48,7 @@ export const StringComponent: React.FC = () => {
     setLoader(false);
   };
 
-  const disableInput = loader 
+  const disableInput = loader;
 
   return (
     <SolutionLayout title="Строка">
