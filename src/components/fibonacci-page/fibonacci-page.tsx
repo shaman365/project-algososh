@@ -34,6 +34,8 @@ export const FibonacciPage: React.FC = () => {
     setLoader(false)
   }
 
+  const disableInput = loader;
+
   return (
     <SolutionLayout title="Последовательность Фибоначчи">
       <section className={styles.main}>
@@ -45,6 +47,7 @@ export const FibonacciPage: React.FC = () => {
             value={values.sourceString}
             onChange={handleChange}
             name={"sourceString"}
+            disabled={disableInput}
           />
           <Button
             extraClass={styles.button}

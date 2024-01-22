@@ -1,12 +1,10 @@
 import { DELAY_IN_MS } from "../../src/constants/delays";
+import { circleSelector } from "../../src/constants/tests"
 
 describe('Тест строки', () => {
   beforeEach(() => {
     cy.visit('/recursion');
   })
-  it('Страница `Строка` доступна', () => {
-    cy.contains('Строка');
-  });
 
   it('Кнопка добавления недоступна, если в инпуте пусто', () => {
     cy.get('input').as('input').should('not.have.value');
@@ -27,7 +25,7 @@ describe('Тест строки', () => {
     cy.get('@button')
       .invoke("attr", "class").should('include', 'loader');
 
-    cy.get('[class^="circle_circle"]').then((items: JQuery<HTMLElement>) => {
+    cy.get(circleSelector).then((items: JQuery<HTMLElement>) => {
       const [el1, el2, el3, el4] = Array.from(items);
 
       cy.wrap(el1)

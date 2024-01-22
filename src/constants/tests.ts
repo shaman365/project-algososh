@@ -1,0 +1,1 @@
+export const circleSelector = '[class^="circle_circle"]';
