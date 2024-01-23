@@ -1,19 +1,19 @@
 import { SHORT_DELAY_IN_MS } from "../../src/constants/delays";
 import { circleSelector } from "../../src/constants/tests"
 
-describe('Stack test', () => {
+describe('Тест стека', () => {
   beforeEach(() => {
     cy.visit('/stack');
   })
 
-  it('Кнопка добавления недоступна, если в инпуте пусто', function() {
+  it('Кнопка добавления недоступна, если в инпуте пусто', () => {
     cy.get('input').as('input');
     cy.get('button').contains('Добавить').parent().as('button').should('be.disabled');
     cy.get('@input').type('10');
     cy.get('@button').should('not.be.disabled');
   });
 
-  it('Добавление элемента в стек', function() {
+  it('Добавление элемента в стек', () => {
     cy.get('input').as('input');
     cy.get('button').contains('Добавить').parent().as('button').should('be.disabled');
     cy.get('@input').type('1');
@@ -72,7 +72,7 @@ describe('Stack test', () => {
     cy.get('@button').should('be.disabled');
   })
 
-  it('Удаление элемента из стека', function() {
+  it('Удаление элемента из стека', () => {
     cy.get('button').contains('Добавить').parent().as('addButton').should('be.disabled');
     cy.get('button').contains('Удалить').parent().as('removeButton').should('be.disabled');
     cy.get('input').as('input');
@@ -133,7 +133,7 @@ describe('Stack test', () => {
     cy.get('@removeButton').should('be.disabled');
   })
 
-  it('Очистка стека', function() {
+  it('Очистка стека', () => {
     cy.get('button').contains('Добавить').parent().as('addButton').should('be.disabled');
     cy.get('button').contains('Очистить').parent().as('clearButton').should('be.disabled');
     cy.get('input').as('input');

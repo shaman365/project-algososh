@@ -50,8 +50,8 @@ export const QueuePage: React.FC = () => {
     if (queue.getLength > 0) {
       setLoader({ ...loader, buttonRemove: true })
       setCurrentIndex(queue.head);
-      queue.dequeue();
       await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
+      queue.dequeue();
       setArr([...queue.getItems]);
       setCurrentIndex(-1);
       setLoader({ ...loader, buttonRemove: false })
