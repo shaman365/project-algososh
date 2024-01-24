@@ -44,11 +44,11 @@ export const StackPage: React.FC = () => {
   const remove = async () => {
     if (stack.size > 0) {
       setLoader({ ...loader, buttonRemove: true })
-      stack.pop();
       setCurrentIndex(stack.size);
+      stack.pop();
       await new Promise(resolve => setTimeout(resolve, SHORT_DELAY_IN_MS));
       setArr([...stack.getItems]);
-      setCurrentIndex(stack.size);
+      setCurrentIndex(-1);
       setLoader({ ...loader, buttonRemove: false })
     }
   }

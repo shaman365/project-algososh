@@ -5,38 +5,38 @@ const getRandomInt = (min: number, max: number): number => {
     return Math.round(Math.random() * (max - min) + min);
 }
 
-export const randomArr = () : number[] => {    
+export const randomArr = (): number[] => {
     const RANGE_MIN = 3;
     const RANGE_MAX = 17;
     const VALUE_MIN = 0;
     const VALUE_MAX = 100;
 
-    const range = getRandomInt(RANGE_MIN, RANGE_MAX);    
+    const range = getRandomInt(RANGE_MIN, RANGE_MAX);
     const res: number[] = [];
 
     for (let i = 0; i < range; i++) {
-      res.push(getRandomInt(VALUE_MIN, VALUE_MAX));
-    }    
+        res.push(getRandomInt(VALUE_MIN, VALUE_MAX));
+    }
     return res;
 }
 
 export const swapElements = (array: number[], firstIndex: number, secondIndex: number) => {
     return [array[firstIndex], array[secondIndex]] = [array[secondIndex], array[firstIndex]];
-} 
+}
 
 export const swapElementsSelection = (arr: number[], directionSort: Direction, index: number, maxIndex: number) => {
     if (directionSort === Direction.Ascending) {
         if (arr[index] < arr[maxIndex]) {
-          swapElements(arr, maxIndex, index)
+            swapElements(arr, maxIndex, index)
         }
-      } else {
+    } else {
         if (arr[index] > arr[maxIndex]) {
-          swapElements(arr, maxIndex, index)
+            swapElements(arr, maxIndex, index)
         }
-      }
+    }
 }
 
-export const swapElementsBubble = (arr: number[], directionSort: Direction, index: number) => {    
+export const swapElementsBubble = (arr: number[], directionSort: Direction, index: number) => {
     if (directionSort === Direction.Ascending) {
         if (arr[index] > arr[index + 1]) {
             swapElements(arr, index, index + 1);
@@ -46,7 +46,7 @@ export const swapElementsBubble = (arr: number[], directionSort: Direction, inde
             swapElements(arr, index, index + 1);
         }
     }
-  } 
+}
 
 export const stateBubbleElement = (index: number, nextElement: number | undefined, currentElement: number | undefined, lastElement: number | undefined) => {
     if (lastElement !== undefined) {
@@ -62,10 +62,29 @@ export const stateBubbleElement = (index: number, nextElement: number | undefine
 export const stateSelectionElement = (index: number, nextElement: number | undefined, currentElement: number | undefined) => {
     if (nextElement !== undefined) {
         if (index === nextElement || index === currentElement) {
-        return ElementStates.Changing
+            return ElementStates.Changing
         } else if (index < nextElement) {
-        return ElementStates.Modified
+            return ElementStates.Modified
         }
         return ElementStates.Default
     }
-    };    
+};
+
+export const bubbleSortTst = (arr: number[] , direction: Direction) => {
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr.length - 1 - i; j++) {
+            swapElementsBubble(arr, direction, j);
+        }
+    }
+    return arr;
+}
+
+export const selectionSortTst = (arr: number[], direction: Direction) => {
+    for (let i = 0; i < arr.length; i++) {
+        let maxIndex = i;
+        for (let j = i + 1; j < arr.length + 1; j++) {
+          swapElementsSelection(arr, direction, j, maxIndex)
+        }
+      }
+    return arr;    
+}
